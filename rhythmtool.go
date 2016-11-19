@@ -25,7 +25,7 @@ type bjorklundStore struct {
 // A Rhythm is a sequential arrangement of Notes.
 type Rhythm []Note
 
-// String can convert Notes to readable strings.
+// String converts Notes to readable strings.
 func (n Note) String() string {
 	if n == HIT {
 		return "x"
@@ -39,6 +39,18 @@ func Random(length int) Rhythm {
 	rhythm := make(Rhythm, length)
 	for i := range rhythm {
 		rhythm[i] = rand.Intn(2) == 0
+	}
+	return rhythm
+}
+
+// UseString takes a string and transforms it into a rhythm
+// based on the characters.
+func UseString(s string) Rhythm {
+	bs := []byte(s)
+	rhythm := make(Rhythm, 0, len(bs))
+
+	for _, b := range bs {
+		rhythm = append(rhythm, b&1 == 1)
 	}
 	return rhythm
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/peter-mueller/rhythmtool"
 )
 
-func Example() {
+func Example_bjorklund() {
 	cinquillo := rhythmtool.GenerateBjorklund(5, 8)
 	fmt.Print("Cuban cinquillo: ")
 	fmt.Println(cinquillo)
