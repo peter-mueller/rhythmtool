@@ -1,21 +1,31 @@
-// rhythmtool project rhythmtool.go
+// Package rhythmtool provides a toolset for generating and manipulating simple
+// rhythmns.
 package rhythmtool
 
 import "math/rand"
 
+// Note is a simple type that describes one single unit of time.
+// It can either be a HIT or a PAUSE.
 type Note bool
 
+// HIT represents an active (or played) Note.
+const HIT Note = true
+
+// PAUSE represents a inactive (or rested) Note.
+const PAUSE Note = false
+
+// bjorklundStore is a container for all information required in the
+// Bjorklund algorithmn.
 type bjorklundStore struct {
 	Counts     []int
 	Remainders []int
 	Rhythm     Rhythm
 }
 
-const HIT Note = true
-const PAUSE Note = false
-
+// A Rhythm is a sequential arrangement of Notes.
 type Rhythm []Note
 
+// String can convert Notes to readable strings.
 func (n Note) String() string {
 	if n == HIT {
 		return "x"
@@ -23,6 +33,8 @@ func (n Note) String() string {
 	return "-"
 }
 
+// Random creates a Rhythm that contains random Notes.
+// Note that the rand Seed can be changed.
 func Random(length int) Rhythm {
 	rhythm := make(Rhythm, length)
 	for i := range rhythm {
@@ -31,6 +43,10 @@ func Random(length int) Rhythm {
 	return rhythm
 }
 
+// GenerateBjorklund creates a Rhythm with specified length that has
+// the number of provided hits.
+//
+// It uses the Bjorklund algorithm to create euclidean rhythmns.
 func GenerateBjorklund(pulses, length int) Rhythm {
 	if pulses > length {
 		panic("failed")
@@ -64,6 +80,11 @@ func GenerateBjorklund(pulses, length int) Rhythm {
 	return store.Rhythm
 }
 
+// Subdivide takes a Rhythm and splits it up to multiple Rhythmns based on the
+// given subdivision.
+//
+// It panics, if n subdivisions do not fit perfectly into the length of
+// the Rhythmn.
 func (rhythm Rhythm) Subdivide(subdivision int) []Rhythm {
 	if len(rhythm)%subdivision != 0 {
 		panic("error")
@@ -75,6 +96,7 @@ func (rhythm Rhythm) Subdivide(subdivision int) []Rhythm {
 	return rhythms
 }
 
+// Rotate shifts a Rhythm to the right or left (negative offset).
 func (rhythm Rhythm) Rotate(offset int) Rhythm {
 	offset = offset * -1 % len(rhythm)
 	if offset < 0 {
@@ -83,6 +105,7 @@ func (rhythm Rhythm) Rotate(offset int) Rhythm {
 	return append(rhythm[offset:], rhythm[:offset]...)
 }
 
+// Reverse flips the Rhythm. Like playing it backwards.
 func (rhythm Rhythm) Reverse() Rhythm {
 	for i := len(rhythm)/2 - 1; i >= 0; i-- {
 		opp := len(rhythm) - 1 - i
@@ -91,6 +114,7 @@ func (rhythm Rhythm) Reverse() Rhythm {
 	return rhythm
 }
 
+// MergeWith combines the Rhythm with the given rhythm.
 func (r1 Rhythm) MergeWith(r2 Rhythm) Rhythm {
 	r := make(Rhythm, max(len(r1), len(r2)))
 	for i, note := range r1 {
