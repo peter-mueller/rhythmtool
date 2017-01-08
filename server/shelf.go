@@ -56,3 +56,14 @@ func UseString(w http.ResponseWriter, r *http.Request) {
 	result := rhythmtool.UseString(s)
 	json.NewEncoder(w).Encode(result)
 }
+
+func Random(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	l, err := strconv.Atoi(r.Form.Get("l"))
+	if err != nil || l < 1 {
+		http.Error(w, "Query parameter 'length' must be at least 1!", http.StatusBadRequest)
+		return
+	}
+	result := rhythmtool.Random(l)
+	json.NewEncoder(w).Encode(result)
+}
