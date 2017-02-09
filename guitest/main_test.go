@@ -2,6 +2,7 @@ package guitest_test
 
 import (
 	"os"
+	"sync"
 	"testing"
 
 	"github.com/peter-mueller/rhythmtool/guitest/cookbook"
@@ -15,6 +16,8 @@ func TestMain(m *testing.M) {
 
 var driver *agouti.WebDriver
 
+//go:generate go test
+//go:generate asciidoctor doc.adoc
 func setup(m *testing.M) int {
 	driver = agouti.ChromeDriver()
 	if err := driver.Start(); err != nil {
@@ -32,7 +35,10 @@ func clearFolders() {
 	os.Mkdir("screenshots", 0777)
 }
 
+var driverMutex sync.Mutex
+
 func newPage(name string) pages.HomePage {
+	driverMutex.Lock()
 	page, err := driver.NewPage(agouti.Browser("chrome"))
 	if err != nil {
 		panic("Failed to open page!")
@@ -41,5 +47,6 @@ func newPage(name string) pages.HomePage {
 		panic("Failed to navigate!")
 	}
 	book := cookbook.New(name)
-	return pages.HomePage{pages.RhythmPage{Chrome: page, Book: book}}
+	driverMutex.Unlock()
+	return pages.HomePage{Base: pages.RhythmPage{Chrome: page, Book: book}}
 }

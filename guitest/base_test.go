@@ -7,6 +7,7 @@ import (
 
 func TestUserLogin(t *testing.T) {
 	t.Parallel()
+
 	homePage := newPage("user-login")
 	defer homePage.Base.Chrome.CloseWindow()
 
@@ -27,8 +28,10 @@ func TestUserLogin(t *testing.T) {
 
 func TestUserLoginFail(t *testing.T) {
 	t.Parallel()
+
 	homePage := newPage("user-login-fail")
 	defer homePage.Base.Chrome.CloseWindow()
+
 	if err := homePage.Base.Login("admin", "wrongpassword"); err != nil {
 		t.Fatal(err)
 	}
@@ -41,5 +44,4 @@ func TestUserLoginFail(t *testing.T) {
 	homePage.Base.Chrome.Screenshot(homePage.Base.Book.RegisterImage())
 
 	homePage.Base.Book.ClearToFile()
-
 }

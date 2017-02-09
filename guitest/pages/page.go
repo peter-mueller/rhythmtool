@@ -16,6 +16,13 @@ type RhythmPage struct {
 	Book   cookbook.CookBook
 }
 
+func (page *RhythmPage) Screenshot() {
+	page.Chrome.Screenshot(page.Book.RegisterImage())
+}
+func (page *RhythmPage) Record(step string) {
+	page.Book.Record(step)
+}
+
 func (page *RhythmPage) Login(username, password string) error {
 
 	if page.IsLoggedIn() {
@@ -32,8 +39,8 @@ func (page *RhythmPage) Login(username, password string) error {
 		return err
 	}
 
-	page.Book.Record("Log in with your username and password and click the login button.")
-	page.Chrome.Screenshot(page.Book.RegisterImage())
+	page.Record("Log in with your username and password and click the login button.")
+	page.Screenshot()
 
 	err = page.Chrome.Find(submitButton).Click()
 	if err != nil {
