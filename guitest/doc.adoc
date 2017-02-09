@@ -1,0 +1,21 @@
+= Rhythm Shelf Documentation
+:toc:
+
+== Create a rhythm by text
+
+A rhythm represents a sequential arrangement of hits and pauses. This creates a beat. 
+It has no defined meter, so the interpration for playing must be done by the user. 
+For example a rhythm with length 12 can be seen as a 3/4 beat with sixteenth notes or 
+a 12/8 beat with eight notes.
+
+Recipe:
+
+include::recipes/create-rhyhtm-by-text.adoc[]
+
+== Log in as a user
+
+include::recipes/user-login.adoc[]
+
+== Failed log in as a user
+
+include::recipes/user-login-fail.adoc[]
