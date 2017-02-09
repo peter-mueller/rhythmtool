@@ -17,7 +17,7 @@ func TestMain(m *testing.M) {
 var driver *agouti.WebDriver
 
 //go:generate go test
-//go:generate asciidoctor doc.adoc
+//go:generate asciidoctor -a data-uri doc.adoc
 func setup(m *testing.M) int {
 	driver = agouti.ChromeDriver()
 	if err := driver.Start(); err != nil {
@@ -31,6 +31,18 @@ func setup(m *testing.M) int {
 }
 
 func clearFolders() {
+
+	if err := os.RemoveAll("recipes"); err != nil {
+		panic(err)
+	}
+	if err := os.RemoveAll("screenshots"); err != nil {
+		panic(err)
+	}
+
+	if err := os.Remove("doc.html"); !os.IsNotExist(err) && err != nil {
+		panic(err)
+	}
+
 	os.Mkdir("recipes", 0777)
 	os.Mkdir("screenshots", 0777)
 }
