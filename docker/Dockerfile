@@ -21,16 +21,27 @@ RUN apt-get update -yqq && \
     apt-get install -yqq ruby asciidoctor chromium && \
     rm -rf /var/lib/apt/lists/*
 
+
+# Install bower
+RUN apt-get update -yqq && \
+    apt-get install -y -qq npm && \
+    rm -rf /var/lib/apt/lists/*
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN npm install --global bower
+
 # Get rhythmtool into the container
 RUN go get -u -d -t github.com/peter-mueller/rhythmtool/...
 RUN go install github.com/peter-mueller/rhythmtool/server/shelfserver
-RUN mkdir -r /tmp/web && \
-    git clone https://github.com/peter-mueller/rhythm-shelf
+RUN mkdir -p /tmp/web && \
+    cd /tmp/web && \
+    git clone https://github.com/peter-mueller/rhythm-shelf && \
+    cd rhythm-shelf && bower i --allow-root
 
 # Start Xvfb
 ENV DISPLAY :99
+EXPOSE 8081
 CMD Xvfb :99 -nolisten tcp & \
-    cd /tmp/web && \
+    cd /tmp/web/rhythm-shelf && \
     shelfserver & \
     cd /go/src/github.com/peter-mueller/rhythmtool && \
     bash
