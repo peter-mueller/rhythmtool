@@ -31,7 +31,7 @@ func (book *CookBook) String() string {
 	for index, step := range book.content {
 		recipe += fmt.Sprintf("%v.  %v\n", index+1, step.text)
 		if step.imagePath != "" {
-			recipe += fmt.Sprintf("+\nimage::%v[height=256,width=256,link=%v]\n", step.imagePath, step.imagePath)
+			recipe += fmt.Sprintf("+\nimage::%v[height=512,width=512,link=%v]\n", step.imagePath, step.imagePath)
 		}
 	}
 	return recipe

@@ -1,6 +1,0 @@
-1.  Log in with your username and password and click the login button.
-+
-image::screenshots/user-login-fail-1.png[height=256,width=256,link=screenshots/user-login-fail-1.png]
-2.  A toast appears, if the credentials were wrong.
-+
-image::screenshots/user-login-fail-2.png[height=256,width=256,link=screenshots/user-login-fail-2.png]

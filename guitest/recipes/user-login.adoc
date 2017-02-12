@@ -1,6 +1,0 @@
-1.  Log in with your username and password and click the login button.
-+
-image::screenshots/user-login-1.png[height=256,width=256,link=screenshots/user-login-1.png]
-2.  Now you are on the home page.
-+
-image::screenshots/user-login-2.png[height=256,width=256,link=screenshots/user-login-2.png]

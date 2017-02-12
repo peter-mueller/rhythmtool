@@ -1,9 +1,0 @@
-1.  Log in with your username and password and click the login button.
-+
-image::screenshots/create-rhythm-by-text-1.png[height=256,width=256,link=screenshots/create-rhythm-by-text-1.png]
-2.  Click the circled plus button in the bottom right corner.
-+
-image::screenshots/create-rhythm-by-text-2.png[height=256,width=256,link=screenshots/create-rhythm-by-text-2.png]
-3.  Select the random option from the radio button group and click the continue button.
-+
-image::screenshots/create-rhythm-by-text-3.png[height=256,width=256,link=screenshots/create-rhythm-by-text-3.png]

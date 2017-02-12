@@ -19,7 +19,17 @@ var driver *agouti.WebDriver
 //go:generate go test
 //go:generate asciidoctor -a data-uri doc.adoc
 func setup(m *testing.M) int {
-	driver = agouti.ChromeDriver()
+	driver = agouti.ChromeDriver(agouti.Desired(agouti.Capabilities{
+		"chromeOptions": map[string][]string{
+			"args": []string{
+				// There is no GPU in docker!
+				"disable-gpu",
+				// Sandbox requires namespace permissions that we don't have on a container
+				"no-sandbox",
+			},
+		},
+	}))
+
 	if err := driver.Start(); err != nil {
 		panic("Failed to start Selenium!")
 	}
