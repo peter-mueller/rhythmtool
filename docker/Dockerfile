@@ -1,10 +1,11 @@
 FROM golang:1.6
 MAINTAINER peter-mueller
 
-# Install Chrome WebDriver
+# Install Chrome WebDriver (lib... required for chromedriver)
 RUN apt-get update -yqq && \
     apt-get -yqq install curl unzip && \
     apt-get -yqq install xvfb && \
+    apt-get -yqq install libxi6 libgconf-2-4 && \
     rm -rf /var/lib/apt/lists/*
 
 RUN CHROMEDRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE` && \
@@ -20,9 +21,12 @@ RUN apt-get update -yqq && \
     apt-get install -yqq ruby asciidoctor chromium && \
     rm -rf /var/lib/apt/lists/*
 
-# Start Xvfb
-RUN Xvfb :99 -nolisten tcp &
-ENV DISPLAY :99
-
 # Get rhythmtool into the container
-RUN go get -u -d github.com/peter-mueller/rhythmtool
+RUN go get -u -d -t github.com/peter-mueller/rhythmtool/...
+RUN cd src/github.com/peter-mueller/rhythmtool
+
+# Start Xvfb
+ENV DISPLAY :99
+CMD Xvfb :99 -nolisten tcp & \
+    cd src/github.com/peter-mueller/rhythmtool && \
+    bash
