@@ -23,10 +23,14 @@ RUN apt-get update -yqq && \
 
 # Get rhythmtool into the container
 RUN go get -u -d -t github.com/peter-mueller/rhythmtool/...
-RUN cd src/github.com/peter-mueller/rhythmtool
+RUN go install github.com/peter-mueller/rhythmtool/server/shelfserver
+RUN mkdir -r /tmp/web && \
+    git clone https://github.com/peter-mueller/rhythm-shelf
 
 # Start Xvfb
 ENV DISPLAY :99
 CMD Xvfb :99 -nolisten tcp & \
-    cd src/github.com/peter-mueller/rhythmtool && \
+    cd /tmp/web && \
+    shelfserver & \
+    cd /go/src/github.com/peter-mueller/rhythmtool && \
     bash
