@@ -5,8 +5,8 @@ type CreateTextPage struct {
 }
 
 const (
-	textInput      = "body /deep/ create-page rhythm-text-input paper-input input"
-	saveTextButton = "body /deep/ create-page rhythm-text-input #controls paper-button[id=save]"
+	textInput      = "body /deep/ create-page.iron-selected rhythm-text-input paper-input input"
+	saveTextButton = "body /deep/ create-page.iron-selected rhythm-text-input #controls paper-button#save"
 )
 
 func (page *CreateTextPage) SetText(text string) error {

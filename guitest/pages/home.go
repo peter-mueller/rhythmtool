@@ -5,7 +5,7 @@ type HomePage struct {
 }
 
 const (
-	createButton = "body /deep/ home-page #create"
+	createButton = "body /deep/ home-page.iron-selected #create"
 )
 
 func (homePage *HomePage) CreateRhythm() (CreatePage, error) {

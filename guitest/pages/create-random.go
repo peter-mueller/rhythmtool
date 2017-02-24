@@ -7,10 +7,10 @@ type CreateRandomPage struct {
 }
 
 const (
-	nameInput        = "body /deep/ create-page rhythm-random-input paper-input[id=nameInput] input"
-	lengthInput      = "body /deep/ create-page rhythm-random-input paper-slider paper-input input"
-	rerollButton     = "body /deep/ create-page rhythm-random-input paper-button[id=random]"
-	saveRandomButton = "body /deep/ create-page rhythm-random-input #controls paper-button[id=save]"
+	nameInput        = "body /deep/ create-page.iron-selected rhythm-random-input paper-input#nameInput input"
+	lengthInput      = "body /deep/ create-page.iron-selected rhythm-random-input paper-slider paper-input input"
+	rerollButton     = "body /deep/ create-page.iron-selected rhythm-random-input paper-button#random"
+	saveRandomButton = "body /deep/ create-page.iron-selected rhythm-random-input #controls paper-button#save"
 )
 
 func (page *CreateRandomPage) SetName(name string) error {

@@ -5,7 +5,7 @@ type CreatePage struct {
 }
 
 const (
-	selectGroup     = "body /deep/ create-page paper-radio-group"
+	selectGroup     = "body /deep/ create-page.iron-selected paper-radio-group"
 	selectText      = selectGroup + " paper-radio-button[name=text]"
 	selectBjorklund = selectGroup + " paper-radio-button[name=bjorklund]"
 	selectRandom    = selectGroup + " paper-radio-button[name=random]"
