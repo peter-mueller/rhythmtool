@@ -12,7 +12,7 @@ A simple rhythm generator/manipulator toolbox.
     `docker run -it --name rhythmtool-env-1 -p 8081:8081 rhythmtool-env`
 
 3.  Check if the GUI works, by opening a chrome browser on the host system and visiting
-    `localhost:8080/app/`. (admin/admin)
+    `localhost:8081/app/`. (admin/admin)
 
 4.  Run the test and generate the docs in the docker container and exit it:
 
