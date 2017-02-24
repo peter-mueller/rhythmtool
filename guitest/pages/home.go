@@ -11,9 +11,6 @@ const (
 func (homePage *HomePage) CreateRhythm() (CreatePage, error) {
 	homePage.Base.Record("Click the circled plus button in the bottom right corner.")
 	homePage.Base.Screenshot()
-	err := homePage.Base.Chrome.Find(createButton).Click()
-	if err != nil {
-		return CreatePage{}, err
-	}
-	return CreatePage{homePage.Base}, nil
+
+	return CreatePage{homePage.Base}, homePage.Base.Click(createButton)
 }

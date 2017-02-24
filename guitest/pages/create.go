@@ -1,7 +1,5 @@
 package pages
 
-import "time"
-
 type CreatePage struct {
 	Base RhythmPage
 }
@@ -16,7 +14,7 @@ const (
 
 func (createPage *CreatePage) SelectText() (CreateTextPage, error) {
 	createPage.Base.Record("Select the text option from the radio button group and click the continue button.")
-	if err := createPage.Base.Chrome.Find(selectText).Click(); err != nil {
+	if err := createPage.Base.Click(selectText); err != nil {
 		return CreateTextPage{}, err
 	}
 	err := createPage.submit()
@@ -25,7 +23,7 @@ func (createPage *CreatePage) SelectText() (CreateTextPage, error) {
 
 func (createPage *CreatePage) SelectBjorklund() (CreateBjorklundPage, error) {
 	createPage.Base.Record("Select the Bjorklund algorithm option from the radio button group and click the continue buttton.")
-	if err := createPage.Base.Chrome.Find(selectBjorklund).Click(); err != nil {
+	if err := createPage.Base.Click(selectBjorklund); err != nil {
 		return CreateBjorklundPage{}, err
 	}
 	err := createPage.submit()
@@ -34,26 +32,15 @@ func (createPage *CreatePage) SelectBjorklund() (CreateBjorklundPage, error) {
 
 func (createPage *CreatePage) SelectRandom() (CreateRandomPage, error) {
 	createPage.Base.Record("Select the random option from the radio button group and click the continue button.")
-	if err := createPage.Base.Chrome.Find(selectRandom).Click(); err != nil {
+	if err := createPage.Base.Click(selectRandom); err != nil {
 		return CreateRandomPage{}, err
 	}
-	err := createPage.submit()
-	return CreateRandomPage{createPage.Base}, err
+	return CreateRandomPage{createPage.Base}, createPage.submit()
 }
 
 func (createPage *CreatePage) submit() error {
-	time.Sleep(time.Second)
 	createPage.Base.Screenshot()
-	err := createPage.Base.Chrome.Find(continueButton).Click()
-	return err
-}
-
-type CreateTextPage struct {
-	Base RhythmPage
-}
-
-type CreateRandomPage struct {
-	Base RhythmPage
+	return createPage.Base.Click(continueButton)
 }
 
 type CreateBjorklundPage struct {

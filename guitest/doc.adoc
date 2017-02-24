@@ -9,6 +9,10 @@ include::recipes/user-login.adoc[]
 
 include::recipes/user-login-fail.adoc[]
 
+== Log out as a user
+
+include::recipes/user-logout.adoc[]
+
 == Create a rhythm by text
 
 A rhythm represents a sequential arrangement of hits and pauses. This creates a beat.
@@ -19,3 +23,8 @@ a 12/8 beat with eight notes.
 Recipe:
 
 include::recipes/create-rhythm-by-text.adoc[]
+
+
+== Create a rhythm by random generation
+
+include::recipes/create-rhythm-by-random.adoc[]

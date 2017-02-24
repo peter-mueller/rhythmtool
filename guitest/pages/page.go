@@ -1,7 +1,12 @@
 package pages
 
-import "github.com/sclevine/agouti"
-import "errors"
+import (
+	"errors"
+	"time"
+
+	"github.com/sclevine/agouti"
+)
+
 import "github.com/peter-mueller/rhythmtool/guitest/cookbook"
 
 const (
@@ -9,6 +14,7 @@ const (
 	passwordInput = "body /deep/ login-check paper-input[label=password] input"
 	submitButton  = "body /deep/ login-check paper-button"
 	loginForm     = "body /deep/ login-check  #login"
+	logoutButton  = "body /deep/ rhythm-shelf-toolbar  #logout"
 )
 
 type RhythmPage struct {
@@ -17,16 +23,41 @@ type RhythmPage struct {
 }
 
 func (page *RhythmPage) Screenshot() {
+	time.Sleep(time.Second / 2)
 	page.Chrome.Screenshot(page.Book.RegisterImage())
 }
 func (page *RhythmPage) Record(step string) {
 	page.Book.Record(step)
 }
 
+var ErrButtonNotClickable = errors.New("The element is disabled and cannot be clicked!")
+
+func (page *RhythmPage) Click(selector string) error {
+	disabled, err := page.Chrome.Find(selector).Attribute("disabled")
+	if err != nil {
+		return err
+	}
+	if disabled == "true" {
+		return ErrButtonNotClickable
+	}
+	return page.Chrome.Find(selector).Click()
+}
+
+var ErrAlreadyLoggedIn = errors.New("Cannot log in. Already logged in.")
+var ErrNotLoggedIn = errors.New("Cannot log out. Not logged in.")
+
+func (page *RhythmPage) Logout() error {
+	page.Record("Log out of the application by clicking the LOGOUT button in the toolbar.")
+	if !page.IsLoggedIn() {
+		return ErrNotLoggedIn
+	}
+	return page.Click(logoutButton)
+}
+
 func (page *RhythmPage) Login(username, password string) error {
 
 	if page.IsLoggedIn() {
-		return errors.New("Already logged in!")
+		return ErrAlreadyLoggedIn
 	}
 
 	err := page.setUsernameInput(username)
@@ -42,11 +73,7 @@ func (page *RhythmPage) Login(username, password string) error {
 	page.Record("Log in with your username and password and click the login button.")
 	page.Screenshot()
 
-	err = page.Chrome.Find(submitButton).Click()
-	if err != nil {
-		return err
-	}
-	return nil
+	return page.Click(submitButton)
 }
 
 func (page *RhythmPage) setPasswordInput(password string) error {
