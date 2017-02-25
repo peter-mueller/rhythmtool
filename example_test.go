@@ -33,12 +33,21 @@ func ExampleRandom() {
 }
 
 func ExampleRhythm_MergeWith() {
+	// Get two different initial rhythms.
 	people := rhythmtool.UseString("People")
 	car := rhythmtool.UseString("Car")
-	fmt.Printf("People: %v, Car: %v\n", people, car)
-	fmt.Printf("Merged: %v", people.MergeWith(car))
+
+	// Create the merge.
+	merge := people.MergeWith(car)
+
+	fmt.Printf("People: %v\n", people)
+	fmt.Printf("Car:    %v\n", car)
+	fmt.Println()
+	fmt.Printf("Merged: %v", merge)
 	// Output:
-	// People: [- x x - - x], Car: [x x -]
+	// People: [- x x - - x]
+	// Car:    [x x -]
+	//
 	// Merged: [x x x - - x]
 }
 
