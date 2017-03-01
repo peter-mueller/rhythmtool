@@ -26,14 +26,19 @@ func (book *CookBook) Record(step string) {
 	book.content = append(book.content, record{text: step})
 }
 
-func (book *CookBook) String() string {
-	recipe := ""
+func (book *CookBook) String() (recipe string) {
+	recipe += "[cols=\"1,1\"]\n"
+	recipe += "|===\n"
 	for index, step := range book.content {
-		recipe += fmt.Sprintf("%v.  %v\n", index+1, step.text)
 		if step.imagePath != "" {
-			recipe += fmt.Sprintf("+\nimage::%v[height=512,width=512,link=%v]\n", step.imagePath, step.imagePath)
+			recipe += fmt.Sprintf("a|image::%v[]\n", step.imagePath)
+		} else {
+			recipe += "|\n"
 		}
+		recipe += fmt.Sprintf("|%v.  %v\n", index+1, step.text)
+		recipe += "\n"
 	}
+	recipe += "|===\n"
 	return recipe
 }
 
